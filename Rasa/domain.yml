@@ -8,8 +8,12 @@ intents:
   - mood_great
   - mood_unhappy
   - bot_challenge
+  - mega_corporation
 
 responses:
+  utter_cyberpunk:
+  - text: "They are evil, control controlling the world, and I love it!"
+
   utter_greet:
   - text: "Hey! How are you?"
 

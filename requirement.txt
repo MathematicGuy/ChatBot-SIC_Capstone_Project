@@ -4,3 +4,4 @@ en_core_web_md
 tensorflow
 transformers
 pandas
+sqlalchemy<2.0

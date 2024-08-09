@@ -17,6 +17,16 @@ nlu:
     - goodevening
     - good afternoon
 
+- intent: mega_corporation
+  examples: |
+    - How do you feel about mega corporations?
+    - What do you think about mega corporations?
+    - Do you like mega corporations?
+    - What is your opinion on mega corporations?
+    - Do you think mega corporations are good?
+    - Do you think mega corporations are bad?
+    - What do you think about mega corporations?
+
 - intent: goodbye
   examples: |
     - cu
