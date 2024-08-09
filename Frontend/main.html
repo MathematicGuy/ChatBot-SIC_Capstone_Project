@@ -1,31 +1,46 @@
-<div id="chat-window">
-    <div id="messages"></div>
-    <input id="user-input" type="text" placeholder="Type a message..." />
-    <button id="send-button">Send</button>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rasa Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
 
-<script>
-    document.getElementById('send-button').onclick = async function() {
-        const userMessage = document.getElementById('user-input').value;
-        document.getElementById('user-input').value = '';
-
-        // Display user message
-        document.getElementById('messages').innerHTML += `<p><b>You:</b> ${userMessage}</p>`;
-
-        // Send message to Rasa server
-        const response = await fetch('http://localhost:5005/webhooks/rest/webhook', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ message: userMessage }),
+        #webchat {
+            width: 400px;
+            height: 600px;
+            border: 1px solid #ddd;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div id="webchat"></div>
+    
+    <!-- Load Rasa Webchat -->
+    <script src="https://cdn.jsdelivr.net/npm/@rasahq/rasa-webchat/lib/index.js"></script>
+    
+    <!-- Initialize Webchat -->
+    <script>
+        window.WebChat?.default.init({
+            selector: "#webchat",
+            initPayload: "/get_started",
+            customData: { language: "en" }, // arbitrary custom data
+            socketUrl: "http://localhost:5005", // change this to your Rasa server URL
+            title: "Rasa Chat",
+            subtitle: "Powered by Rasa",
         });
+        </script>
+</body>
+</html>
 
-        const data = await response.json();
-
-        // Display bot response
-        data.forEach((message) => {
-            document.getElementById('messages').innerHTML += `<p><b>Bot:</b> ${message.text}</p>`;
-        });
-    };
-</script>
