@@ -21,7 +21,7 @@ Responses:
 
 ```yaml
 utter_cyberpunk:
-- text: "How do you feel about mega corporations?"
+  - text: "They are evil, control controlling the world, and I love it!"
 ```
 
 

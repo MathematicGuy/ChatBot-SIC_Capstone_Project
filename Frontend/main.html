@@ -4,43 +4,135 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rasa Chatbot</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
     <style>
+        /* Andromeda Theme Colors */
+        :root {
+            --background-color: #1e1e2e;
+            --primary-color: #c792ea;
+            --secondary-color: #82aaff;
+            --text-color: #d0d0d0;
+            --border-color: #282a36;
+            --user-message-bg: #44475a;
+            --bot-message-bg: #2a2e3c;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f4f4f4;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            font-family: 'Fira Code', monospace;
         }
 
-        #webchat {
-            width: 400px;
-            height: 600px;
-            border: 1px solid #ddd;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        .chat-container {
+            width: 100%;
+            max-width: 400px;
+            background-color: var(--border-color);
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            border-bottom: 1px solid var(--border-color);
+            background-color: var(--background-color);
+        }
+
+        .chat-input {
+            display: flex;
+            border-top: 1px solid var(--border-color);
+            padding: 10px;
+            background-color: var(--border-color);
+        }
+
+        .chat-input input {
+            flex: 1;
+            border: none;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            padding: 10px;
+            outline: none;
+        }
+
+        .chat-input button {
+            background-color: var(--primary-color);
+            border: none;
+            color: white;
+        }
+
+        .message {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .message.user {
+            text-align: right;
+            background-color: var(--user-message-bg);
+            color: var(--text-color);
+        }
+
+        .message.bot {
+            text-align: left;
+            background-color: var(--bot-message-bg);
+            color: var(--text-color);
         }
     </style>
 </head>
 <body>
-    <div id="webchat"></div>
-    
-    <!-- Load Rasa Webchat -->
-    <script src="https://cdn.jsdelivr.net/npm/@rasahq/rasa-webchat/lib/index.js"></script>
-    
-    <!-- Initialize Webchat -->
+    <div class="chat-container">
+        <div id="chat-messages" class="chat-messages"></div>
+        <div class="chat-input">
+            <input id="user-input" type="text" class="form-control" placeholder="Type a message..." />
+            <button id="send-button" class="btn btn-primary">Send</button>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Chatbot Script -->
     <script>
-        window.WebChat?.default.init({
-            selector: "#webchat",
-            initPayload: "/get_started",
-            customData: { language: "en" }, // arbitrary custom data
-            socketUrl: "http://localhost:5005", // change this to your Rasa server URL
-            title: "Rasa Chat",
-            subtitle: "Powered by Rasa",
-        });
-        </script>
+        document.getElementById('send-button').onclick = async function() {
+            const userMessage = document.getElementById('user-input').value;
+            document.getElementById('user-input').value = '';
+
+            if (userMessage.trim() === '') {
+                return;
+            }
+
+            // Display user message
+            document.getElementById('chat-messages').innerHTML += `<div class="message user"><b>You:</b> ${userMessage}</div>`;
+            document.getElementById('chat-messages').scrollTop = document.getElementById('chat-messages').scrollHeight;
+
+            // Send message to Rasa server
+            const response = await fetch('http://localhost:5005/webhooks/rest/webhook', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message: userMessage }),
+            });
+
+            const data = await response.json();
+
+            // Display bot response
+            data.forEach((message) => {
+                document.getElementById('chat-messages').innerHTML += `<div class="message bot"><b>Bot:</b> ${message.text}</div>`;
+                document.getElementById('chat-messages').scrollTop = document.getElementById('chat-messages').scrollHeight;
+            });
+        };
+    </script>
 </body>
 </html>
-
