@@ -1,0 +1,31 @@
+<div id="chat-window">
+    <div id="messages"></div>
+    <input id="user-input" type="text" placeholder="Type a message..." />
+    <button id="send-button">Send</button>
+</div>
+
+<script>
+    document.getElementById('send-button').onclick = async function() {
+        const userMessage = document.getElementById('user-input').value;
+        document.getElementById('user-input').value = '';
+
+        // Display user message
+        document.getElementById('messages').innerHTML += `<p><b>You:</b> ${userMessage}</p>`;
+
+        // Send message to Rasa server
+        const response = await fetch('http://localhost:5005/webhooks/rest/webhook', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ message: userMessage }),
+        });
+
+        const data = await response.json();
+
+        // Display bot response
+        data.forEach((message) => {
+            document.getElementById('messages').innerHTML += `<p><b>Bot:</b> ${message.text}</p>`;
+        });
+    };
+</script>
