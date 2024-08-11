@@ -11,8 +11,9 @@ from typing import Any, Text, Dict, List
 
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
+import json
 
-
+# say user data
 class ActionSayData(Action):
 
     def name(self) -> Text:
@@ -35,6 +36,7 @@ class ActionSayData(Action):
 
         return []
 
+# greet user
 class ActionGreetUser(Action):
 
     def name(self) -> Text:
@@ -50,5 +52,28 @@ class ActionGreetUser(Action):
             dispatcher.utter_message(text=f"Hello {name}! How can I assist you today?")
         else:
             dispatcher.utter_message(text="Hello! How can I assist you today?")
+        
+        return []
+
+# store conversation data
+class ActionStoreData(Action):
+
+    def name(self) -> Text:
+        return "action_store_data"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        
+        user_data = {
+            "name": tracker.get_slot("name"),
+            "tech_number": tracker.get_slot("tech_number"),
+            "city": tracker.get_slot("city"),
+        }
+        
+        with open("user_data.json", "w") as f:
+            json.dump(user_data, f)
+        
+        dispatcher.utter_message(text="Your information has been saved.")
         
         return []
