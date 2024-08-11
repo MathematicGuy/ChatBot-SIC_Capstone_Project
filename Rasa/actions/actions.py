@@ -34,3 +34,21 @@ class ActionSayData(Action):
             dispatcher.utter_message(text=f"Hi {name}, I see that your city is {city} and your tech number is {tech_number}.")
 
         return []
+
+class ActionGreetUser(Action):
+
+    def name(self) -> Text:
+        return "action_greet_user"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        
+        name = tracker.get_slot("name")
+        
+        if name:
+            dispatcher.utter_message(text=f"Hello {name}! How can I assist you today?")
+        else:
+            dispatcher.utter_message(text="Hello! How can I assist you today?")
+        
+        return []
