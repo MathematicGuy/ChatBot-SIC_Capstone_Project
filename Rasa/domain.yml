@@ -1,38 +1,87 @@
-version: "3.1"
+version: '3.1'
 
 intents:
-  - greet
-  - goodbye
   - affirm
+  - bot_challenge
   - deny
+  - goodbye
+  - greet
+  - mega_corporation
   - mood_great
   - mood_unhappy
-  - bot_challenge
-  - mega_corporation
+  - repeat_tech_number
+  - tech_number
+
+entities:
+  - neural_id 
+  - name
+  - city
+
+slots:
+  tech_number:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: neural_id
+
+  name:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: name
+
+  city:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: city      
+
+
+forms:
+  simple_form:
+    required_slots:
+      - tech_number
+      - name
+      - city
 
 responses:
   utter_cyberpunk:
-  - text: "They are evil, control controlling the world, and I love it!"
+  - text: They are evil, control controlling the world, and I love it!
+  
+  utter_ask_tech_number:
+  - text: Can I get have neural ID please?
+  
+  utter_ask_name:
+  - text: What is your name?
+
+  utter_ask_city:
+  - text: Where do you live?
 
   utter_greet:
-  - text: "Hey! How are you?"
-
+  - text: Hey! How are you?
+  
   utter_cheer_up:
-  - text: "Here is something to cheer you up:"
-    image: "https://i.imgur.com/nGF1K8f.jpg"
-
+  - text: 'Here is something to cheer you up:'
+    image: https://i.imgur.com/nGF1K8f.jpg
+  
   utter_did_that_help:
-  - text: "Did that help you?"
-
+  - text: Did that help you?
+  
   utter_happy:
-  - text: "Great, carry on!"
-
+  - text: Great, carry on!
+  
   utter_goodbye:
-  - text: "Bye"
-
+  - text: Bye
+  
   utter_iamabot:
-  - text: "I am a bot, powered by Rasa."
+  - text: I am a bot, powered by Rasa.
 
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
+
+actions:
+- action_say_data

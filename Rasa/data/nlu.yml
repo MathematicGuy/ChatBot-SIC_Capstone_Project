@@ -1,5 +1,4 @@
 version: "3.1"
-
 nlu:
 - intent: greet
   examples: |
@@ -17,6 +16,7 @@ nlu:
     - goodevening
     - good afternoon
 
+
 - intent: mega_corporation
   examples: |
     - How do you feel about mega corporations?
@@ -25,7 +25,28 @@ nlu:
     - What is your opinion on mega corporations?
     - Do you think mega corporations are good?
     - Do you think mega corporations are bad?
-    - What do you think about mega corporations?
+
+- intent: inform
+  examples: |
+    - [id20123](neural_id)
+    - This is my neural id number [id20123](neural_id)
+    - My neural id is [id20123](neural_id)
+    - Here my neural id [id20123](neural_id)
+    - my name is [thanh](name)
+    - I'm [linh](name)
+    - People call me [thanh](name)
+    - [thanh](name)
+    - I live in [Ha Noi](city)
+    - I am from [HCM](city)
+    - my city is [Ha Noi](city)
+    - my city is [Nam Dinh](city)
+
+- intent: repeat_tech_number
+  examples: |
+    - Can you repeat my neural id?
+    - What is my neural id?
+    - Can you tell me my neural id?
+    - What is my id number?
 
 - intent: goodbye
   examples: |

@@ -1,0 +1,20 @@
+[
+  {
+    "tag_name": "entity",
+    "ids_to_tags": {
+      "1": "B-neural_id",
+      "2": "I-neural_id",
+      "3": "L-neural_id",
+      "4": "U-neural_id",
+      "0": "O"
+    },
+    "tags_to_ids": {
+      "B-neural_id": 1,
+      "I-neural_id": 2,
+      "L-neural_id": 3,
+      "U-neural_id": 4,
+      "O": 0
+    },
+    "num_tags": 5
+  }
+]
