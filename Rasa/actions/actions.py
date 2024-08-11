@@ -27,9 +27,10 @@ class ActionSayData(Action):
         city = tracker.get_slot("city")
         
         if not tech_number:
-            dispatcher.utter_message(text="I'm sorry, I couldn't find your information.")
+            dispatcher.utter_message(text="I'm sorry, I couldn't find your tech number. Could you please provide it?")
+        elif not name or not city:
+            dispatcher.utter_message(text="It seems I'm missing some of your details. Could you confirm your name and city?")
         else:
-            dispatcher.utter_message(text=f"Hi {name}, I see that your city is {city} and your neural id is {tech_number}.")
+            dispatcher.utter_message(text=f"Hi {name}, I see that your city is {city} and your tech number is {tech_number}.")
 
         return []
-
