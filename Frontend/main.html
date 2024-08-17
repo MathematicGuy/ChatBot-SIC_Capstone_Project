@@ -116,7 +116,7 @@
             document.getElementById('chat-messages').innerHTML += `<div class="message user"><b>You:</b> ${userMessage}</div>`;
             document.getElementById('chat-messages').scrollTop = document.getElementById('chat-messages').scrollHeight;
 
-            // Send message to Rasa server
+            // Send messAage to Rasa server
             const response = await fetch('http://localhost:5005/webhooks/rest/webhook', {
                 method: 'POST',
                 headers: {

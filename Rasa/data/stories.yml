@@ -71,3 +71,38 @@ stories:
 #         - neural_id: "id20123"
 #     - action: utter_ask_name
 #     - action: utter_ask_city
+- story: interactive_story_1
+  steps:
+  - intent: greet
+  - action: simple_form
+  - active_loop: simple_form
+  - slot_was_set:
+    - requested_slot: tech_number
+  - intent: inform
+    entities:
+    - name: thanh
+  - slot_was_set:
+    - name: thanh
+  - action: simple_form
+  - slot_was_set:
+    - requested_slot: tech_number
+  - intent: inform
+    entities:
+    - neural_id: id20123
+  - slot_was_set:
+    - tech_number: id20123
+  - action: simple_form
+  - slot_was_set:
+    - requested_slot: city
+  - intent: inform
+    entities:
+    - city: Ha Noi
+  - slot_was_set:
+    - city: Ha Noi
+  - action: simple_form
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: action_say_data
+  - intent: deny
+  - action: action_default_fallback

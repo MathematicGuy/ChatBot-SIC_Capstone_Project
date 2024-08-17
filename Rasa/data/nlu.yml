@@ -15,8 +15,6 @@ nlu:
     - goodmorning
     - goodevening
     - good afternoon
-
-
 - intent: mega_corporation
   examples: |
     - How do you feel about mega corporations?
@@ -25,7 +23,6 @@ nlu:
     - What is your opinion on mega corporations?
     - Do you think mega corporations are good?
     - Do you think mega corporations are bad?
-
 - intent: inform
   examples: |
     - [id20123](neural_id)
@@ -40,14 +37,15 @@ nlu:
     - I am from [HCM](city)
     - my city is [Ha Noi](city)
     - my city is [Nam Dinh](city)
-
+    - My name is [Thanh]{"entity": "name", "value": "thanh"}
+    - [id20123](neural_id)
+    - [Ha Noi](city)
 - intent: repeat_tech_number
   examples: |
     - Can you repeat my neural id?
     - What is my neural id?
     - Can you tell me my neural id?
     - What is my id number?
-
 - intent: goodbye
   examples: |
     - cu
@@ -60,7 +58,6 @@ nlu:
     - see you around
     - bye bye
     - see you later
-
 - intent: affirm
   examples: |
     - yes
@@ -69,7 +66,6 @@ nlu:
     - of course
     - that sounds good
     - correct
-
 - intent: deny
   examples: |
     - no
@@ -79,7 +75,6 @@ nlu:
     - don't like that
     - no way
     - not really
-
 - intent: mood_great
   examples: |
     - perfect
@@ -96,7 +91,6 @@ nlu:
     - so so perfect
     - so good
     - so perfect
-
 - intent: mood_unhappy
   examples: |
     - my day was horrible
@@ -113,7 +107,6 @@ nlu:
     - extremly sad
     - so saad
     - so sad
-
 - intent: bot_challenge
   examples: |
     - are you a bot?
