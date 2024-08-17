@@ -1,7 +1,7 @@
 ## How To Train Model
 
 
-**I. Add your story to stories.py**
+**I. Add your story to [stories.yml](./Rasa/data/stories.yml)**
 
 **Example:**
 
@@ -13,7 +13,7 @@
   - action: utter_cyberpunk
 ```
 
-**II. Add your story to domain.yml**
+**II. Add your story to [domain.yml](./Rasa/domain.yml)**
 
 Add 'mega_corporation' to intents
 

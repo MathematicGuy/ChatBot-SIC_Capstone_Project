@@ -11,8 +11,9 @@ from typing import Any, Text, Dict, List
 
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
+import json
 
-
+# say user data
 class ActionSayData(Action):
 
     def name(self) -> Text:
@@ -27,9 +28,52 @@ class ActionSayData(Action):
         city = tracker.get_slot("city")
         
         if not tech_number:
-            dispatcher.utter_message(text="I'm sorry, I couldn't find your information.")
+            dispatcher.utter_message(text="I'm sorry, I couldn't find your tech number. Could you please provide it?")
+        elif not name or not city:
+            dispatcher.utter_message(text="It seems I'm missing some of your details. Could you confirm your name and city?")
         else:
-            dispatcher.utter_message(text=f"Hi {name}, I see that your city is {city} and your neural id is {tech_number}.")
+            dispatcher.utter_message(text=f"Hi {name}, I see that your city is {city} and your tech number is {tech_number}.")
 
         return []
 
+# greet user
+class ActionGreetUser(Action):
+
+    def name(self) -> Text:
+        return "action_greet_user"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        
+        name = tracker.get_slot("name")
+        
+        if name:
+            dispatcher.utter_message(text=f"Hello {name}! How can I assist you today?")
+        else:
+            dispatcher.utter_message(text="Hello! How can I assist you today?")
+        
+        return []
+
+# store conversation data
+class ActionStoreData(Action):
+
+    def name(self) -> Text:
+        return "action_store_data"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        
+        user_data = {
+            "name": tracker.get_slot("name"),
+            "tech_number": tracker.get_slot("tech_number"),
+            "city": tracker.get_slot("city"),
+        }
+        
+        with open("user_data.json", "w") as f:
+            json.dump(user_data, f)
+        
+        dispatcher.utter_message(text="Your information has been saved.")
+        
+        return []
